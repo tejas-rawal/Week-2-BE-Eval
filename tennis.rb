@@ -8,6 +8,7 @@ module Tennis
 
       @player1.opponent = @player2
       @player2.opponent = @player1
+      @score_counter = 0
     end
 
     # Records a win for a ball in a game.
@@ -23,20 +24,50 @@ module Tennis
         @player2.record_won_ball!
         return @player2.points
       end
-
+      @score_counter += 1
+      return @score_counter
       # TODO: Think it's gross to pass an integer instead of a player object?
       # Then reimplement this method!
     end
 
     def result_game1
-      score_counter = 0
+      while @score_counter < 3
+        if @player1.points > @player2.points
+          return "Player 1 leads: #{@player1.score} - #{@player2.score}."
+        elsif @player2.points > @player1.points
+          return "Player2 leads: #{@player2.score} - #{@player1.score}."
+        else 
+          return "The game is tied: #{@player1.score} - #{@player2.score}."
+        end      
+      end
 
-      while score_counter < 3
-        if score_counter == 0
-          
+      while score_counter == 3
+        if @player1.points == @player2.points
+          puts "Duece! Next point takes advantage."
+            if @player1.points > @player2.points
+              @player1.player_advantage = true
+              puts "Advantage: Player 1"
+                if @player1.points - @player2.points == 2
+                  return "Congratulations Player 1. YOU WIN!"
+                else
+                  @player1.player_advantage = false
+                  @score_counter -= 1
+                  return @score_counter
+                end
+            else
+              @player2.player_advantage = true
+              puts "Advantage: Player 2"
+                if @player2.points - @player1.points == 2
+                  return "Congratulations Player 2. YOU WIN"
+                else
+                  @player2.player_advantage = false
+                  @score_counter -= 1
+                  return @score_counter
+                end
+            end
         end
       end
-    end
+    end  
   end
 
   class Player
