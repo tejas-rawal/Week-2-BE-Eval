@@ -29,7 +29,71 @@ describe Tennis::Game do
     end
   end
 
-  describe '#result' do
+  describe '#result_game1' do
+    context 'After two points have been awarded' do
+      it 'returns the score stating that player 1 leads Thirty - Love' do
+        
+
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+
+        expect(game.result_game1).to eq "Player 1 leads: Thirty - Love."
+      end
+    
+      it 'returns that the game is tied including what score it is' do
+
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+
+        expect(game.result_game1).to eq "The game is tied: Fifteen - Fifteen."
+      end
+    end
+
+    context 'After 3 points have been awarded' do
+      it 'returns the score stating that player 2 leads Thirty - Fifteen' do
+
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+
+        expect(game.result_game1).to eq "Player 2 leads: Thirty - Fifteen."
+      end
+    end
+
+    context 'After 4 points have been awarded' do
+      it 'returns the score stating that player 1 lead Forty - Fifteen' do
+
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+
+        expect(game.result_game1).to eq "Player 1 leads: Forty - Fifteen."
+      end
+
+      it 'returns that Player 2 has won the game with the score' do
+        
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+
+        expect(game.result_game1).to eq "Congratulations Player 2! You have won the game."
+      end
+    end
+
+    context 'After 5 points have been awarded' do
+      it 'returns that Player1 has won the game with the score' do
+
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+
+        expect(game.result_game1).to eq "Congratulations Player 1! You have won the game."
+      end
+    end
   end
 end
 
@@ -88,5 +152,5 @@ describe Tennis::Player do
         expect(player.score).to eq('Forty')
       end
     end
-  end
+  end  
 end

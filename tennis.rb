@@ -31,23 +31,43 @@ module Tennis
     end
 
     def result_game1
-      while @score_counter < 3
-        if @player1.points > @player2.points
+      minus_result = @player1.points - @player2.points
+
+      while @player1.points < 4 && @player2.points < 4
+        if @score_counter < 4
           return "Player 1 leads: #{@player1.score} - #{@player2.score}."
         elsif @player2.points > @player1.points
-          return "Player2 leads: #{@player2.score} - #{@player1.score}."
+          return "Player 2 leads: #{@player2.score} - #{@player1.score}."
         else 
           return "The game is tied: #{@player1.score} - #{@player2.score}."
-        end      
+        end
       end
 
-      while score_counter == 3
+      while @score_counter >= 4 || @score_counter < 6
+        if (minus_result < 2 && minus_result > -2)
+          if @player1.points > @player2.points
+            return "Player 1 leads: #{@player1.score} - #{@player2.score}."
+          elsif @player2.points > @player1.points
+            return "Player 2 leads: #{@player2.score} - #{@player1.score}."
+          else 
+            return "The game is tied: #{@player1.score} - #{@player2.score}."
+          end
+        elsif (minus_result >= 2 || minus_result <= -2)
+          if @player1.points > @player2.points
+            return "Congratulations Player 1! You have won the game."
+          else
+            return "Congratulations Player 2! You have won the game."
+          end
+        end
+      end
+
+      while @score_counter == 6
         if @player1.points == @player2.points
           puts "Duece! Next point takes advantage."
             if @player1.points > @player2.points
               @player1.player_advantage = true
               puts "Advantage: Player 1"
-                if @player1.points - @player2.points == 2
+                if minus_result == 2
                   return "Congratulations Player 1. YOU WIN!"
                 else
                   @player1.player_advantage = false
@@ -57,15 +77,22 @@ module Tennis
             else
               @player2.player_advantage = true
               puts "Advantage: Player 2"
-                if @player2.points - @player1.points == 2
+                if minus_result == -2
                   return "Congratulations Player 2. YOU WIN"
                 else
                   @player2.player_advantage = false
                   @score_counter -= 1
                   return @score_counter
                 end
-            end
+            end 
         end
+      end
+      while @score_counter > 6
+        if @player1.points > @player2.points
+          return "Congratulations Player 1! You have won the game."
+        else
+          return "Congratulations Player 2! You have won the game."
+        end 
       end
     end  
   end
