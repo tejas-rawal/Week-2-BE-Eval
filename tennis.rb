@@ -16,11 +16,11 @@ module Tennis
     #
     # Returns the score of the winning player. 
     def wins_point(winner)
-      if winnner == @player1
-        @player1.record_won_ball
+      if winner == @player1
+        @player1.record_won_ball!
         return @player1.points
       else
-        @player2.record_won_ball
+        @player2.record_won_ball!
         return @player2.points
       end
 
@@ -28,18 +28,24 @@ module Tennis
       # Then reimplement this method!
     end
 
-    def score
+    def result_game1
+      score_counter = 0
 
+      while score_counter < 3
+        if score_counter == 0
+          
+        end
+      end
     end
   end
 
   class Player
-    attr_accessor :points, :opponent, :player_advantage, :result
+    attr_accessor :points, :opponent, :player_advantage, :player_score
 
     def initialize
       @points = 0
       @player_advantage = false
-      @result = {}
+      @player_score = {}
     end
 
     # Increments the score by 1.
@@ -47,20 +53,28 @@ module Tennis
     # Returns the integer new score.
     def record_won_ball!
       @points += 1
+      return @points
     end
 
     # Returns the String score for the player.
     def score
       
       case @points
-        when 0 then result[@points] = 'love'
-        when 1 then result[@points] = 'Fifteen'
-        when 2 then result[@points] = 'Thirty'
-        when 3 then result[@points] = 'Forty'
-        else return @points
+        when 0 
+          @player_score[@points] = 'Love'
+          return @player_score[@points]
+        when 1 
+          @player_score[@points] = 'Fifteen'
+          return @player_score[@points]
+        when 2 
+          @player_score[@points] = 'Thirty'
+          return @player_score[@points]
+        when 3 
+          @player_score[@points] = 'Forty'
+          return @player_score[@points]
+        else 
+          return @points 
       end
-      
-      return @result
     end
   end
 end
