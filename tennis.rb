@@ -33,50 +33,55 @@ module Tennis
     def result_game1
       minus_result = @player1.points - @player2.points
 
-      while @player1.points < 4 && @player2.points < 4
-        if @score_counter < 4
+      while @score_counter < 4
+        if minus_result > 0
           return "Player 1 leads: #{@player1.score} - #{@player2.score}."
-        elsif @player2.points > @player1.points
+        elsif minus_result < 0
           return "Player 2 leads: #{@player2.score} - #{@player1.score}."
         else 
           return "The game is tied: #{@player1.score} - #{@player2.score}."
         end
       end
 
-      while @score_counter >= 4 || @score_counter < 6
-        if (minus_result < 2 && minus_result > -2)
-          if @player1.points > @player2.points
-            return "Player 1 leads: #{@player1.score} - #{@player2.score}."
-          elsif @player2.points > @player1.points
-            return "Player 2 leads: #{@player2.score} - #{@player1.score}."
-          else 
-            return "The game is tied: #{@player1.score} - #{@player2.score}."
-          end
-        elsif (minus_result >= 2 || minus_result <= -2)
-          if @player1.points > @player2.points
-            return "Congratulations Player 1! You have won the game."
+      while @score_counter >= 4  
+        if @score_counter < 6
+          if @player1.points < 4 && @player2.points < 4
+            if minus_result > 0
+              return "Player 1 leads: #{@player1.score} - #{@player2.score}."
+            elsif minus_result < 0
+              return "Player 2 leads: #{@player2.score} - #{@player1.score}."
+            else 
+              return "The game is tied: #{@player1.score} - #{@player2.score}."
+            end
           else
-            return "Congratulations Player 2! You have won the game."
+            if minus_result >= 2 
+              return "Congratulations #{@player1}. YOU WIN!"
+            elsif minus_result <= -2
+              return "Congratulations  #{@player2}. YOU WIN!"
+            end
+        end  
+      end
+
+      elsif @score_counter == 6
+        if minus_result == 0
+          return "Duece! Next point takes advantage."    
+        else
+          if minus_result > 0
+            return "Congratulations Player 1. YOU WIN!"
+          else
+            return "Congratulations Player 2. YOU WIN!"
           end
         end
       end
 
-      while @score_counter == 6
-        if @player1.points == @player2.points
-          puts "Duece! Next point takes advantage."
-            if @player1.points > @player2.points
-              @player1.player_advantage = true
-              puts "Advantage: Player 1"
-                if minus_result == 2
-                  return "Congratulations Player 1. YOU WIN!"
-                else
-                  @player1.player_advantage = false
-                  @score_counter -= 1
-                  return @score_counter
-                end
-            else
-              @player2.player_advantage = true
-              puts "Advantage: Player 2"
+      if @score_counter > 6
+        if minus_result == 1
+          @player1.player_advantage = true
+          return "Advantage: Player 1"
+                
+        elsif minus_result == -1
+          @player2.player_advantage = true
+          return "Advantage: Player 2"
                 if minus_result == -2
                   return "Congratulations Player 2. YOU WIN"
                 else
@@ -85,9 +90,6 @@ module Tennis
                   return @score_counter
                 end
             end 
-        end
-      end
-      while @score_counter > 6
         if @player1.points > @player2.points
           return "Congratulations Player 1! You have won the game."
         else
