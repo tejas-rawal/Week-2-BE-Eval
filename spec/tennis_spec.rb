@@ -120,6 +120,33 @@ describe Tennis::Game do
 
         expect(game.result_game1).to eq "The game is tied. Duece! Next point takes advantage."
       end
+
+      it 'returns that player 2 has won the game' do
+
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+
+        expect(game.result_game1).to eq "Congratulations Player 2. YOU WIN!" 
+      end
+    end
+
+    context 'Game is being played for advantage point' do
+      it 'returns that player 1 has advantage' do
+
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+
+        expect(game.result_game1).to eq "Advantage: Player 1"
+      end
     end
   end
 end
