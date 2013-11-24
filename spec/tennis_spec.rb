@@ -24,8 +24,10 @@ describe Tennis::Game do
   describe '#wins_point' do
     it 'increments the points of the winning player' do
       game.wins_point(game.player1)
+      game.wins_point(game.player1)
+      game.wins_point(game.player1)
 
-      expect(game.player1.points).to eq(1)
+      expect(game.player1.points).to eq(3)
     end
   end
 
@@ -71,14 +73,14 @@ describe Tennis::Game do
         expect(game.result_game1).to eq "Player 1 leads: Forty - Fifteen."
       end
 
-      it 'returns that Player 2 has won the game' do
+      it 'returns that Player 1 has won the game' do
         
-        game.wins_point(game.player2)
-        game.wins_point(game.player2)
-        game.wins_point(game.player2)
-        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
+        game.wins_point(game.player1)
 
-        expect(game.result_game1).to eq "Congratulations Player 2! You have won the game."
+        expect(game.result_game1).to eq "Congratulations Player 1. YOU WIN!"
       end
     end
 
@@ -93,10 +95,21 @@ describe Tennis::Game do
 
         expect(game.result_game1).to eq "Player 1 leads: Forty - Thirty."
       end
+
+      it 'returns that player 2 has won the game' do
+
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+        game.wins_point(game.player1)
+        game.wins_point(game.player2)
+        game.wins_point(game.player2)
+
+        expect(game.result_game1).to eq "Congratulations Player 2. YOU WIN!"
+      end      
     end
 
-    context 'After 6 point have been awarded and a tie occurs' do
-      it 'returns that the game has entered duece' do
+    context 'After 6 points have been awarded' do
+      it 'returns that the game has entered duece if a tie occurs' do
 
         game.wins_point(game.player1)
         game.wins_point(game.player2)
@@ -105,7 +118,7 @@ describe Tennis::Game do
         game.wins_point(game.player1)
         game.wins_point(game.player2)
 
-        expect(game.result_game1).to eq "Duece! Next point takes advantage."
+        expect(game.result_game1).to eq "The game is tied. Duece! Next point takes advantage."
       end
     end
   end
