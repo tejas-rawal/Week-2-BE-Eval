@@ -1,8 +1,10 @@
 module Tennis
   class Game
+    
     attr_accessor :player1, :player2
 
     def initialize
+     
       @player1 = Tennis::Player.new
       @player2 = Tennis::Player.new
       @score_counter = 0
@@ -17,6 +19,7 @@ module Tennis
     #
     # Returns the score of the winning player. 
     def wins_point(winner)
+      
       if winner == @player1
         @player1.record_won_ball!
         @score_counter += 1
@@ -30,9 +33,14 @@ module Tennis
       # Then reimplement this method!
     end
 
+    # Returns result of the game at hand.
+    # 
+    # Acconts for advantage rule if game reaches duece.
     def result_game1
+      
       minus_result = @player1.points - @player2.points
 
+      # While less than 4 points have been recorded
       while @score_counter < 4
         if minus_result > 0
           return "Player 1 leads: #{@player1.score} - #{@player2.score}."
@@ -43,6 +51,7 @@ module Tennis
         end
       end
 
+      # While either 4 or 5 points have been recorded
       while (@score_counter >= 4 && @score_counter < 6)
         if (@player1.points >= 4 || @player2.points >= 4)
           if minus_result > 0
@@ -63,6 +72,7 @@ module Tennis
         end
       end
 
+      # Once 6 points have been recorded
       while @score_counter >= 6
         case minus_result
         when 0
